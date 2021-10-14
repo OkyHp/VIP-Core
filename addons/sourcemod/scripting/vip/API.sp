@@ -625,7 +625,7 @@ int API_GiveClientVIP(Handle hPlugin,
 
 		g_hFeatures[iClient].SetString(KEY_GROUP, szGroup);
 
-		int iAccountID = GetSteamAccountID(int client, bool validate);
+		int iAccountID = GetSteamAccountID(iClient, true);
 		g_hFeatures[iClient].SetValue(KEY_CID, iAccountID ? iAccountID : -1);
 
 		g_iClientInfo[iClient] |= IS_VIP|IS_LOADED;
