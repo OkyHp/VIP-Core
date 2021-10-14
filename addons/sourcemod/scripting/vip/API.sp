@@ -624,11 +624,15 @@ int API_GiveClientVIP(Handle hPlugin,
 		}
 
 		g_hFeatures[iClient].SetString(KEY_GROUP, szGroup);
-		g_hFeatures[iClient].SetValue(KEY_CID, -1);
-		g_iClientInfo[iClient] |= IS_VIP;
-		g_iClientInfo[iClient] |= IS_LOADED;
 
-		Clients_LoadVIPFeatures(iClient);
+		int iAccountID = GetSteamAccountID(int client, bool validate);
+		g_hFeatures[iClient].SetValue(KEY_CID, iAccountID ? iAccountID : -1);
+
+		g_iClientInfo[iClient] |= IS_VIP|IS_LOADED;
+
+		CallForward_OnClientLoaded(iClient);
+
+		Clients_LoadVIPFeaturesPre(iClient);
 
 		DisplayClientInfo(iClient, iTime == 0 ? "connect_info_perm":"connect_info_time");
 
